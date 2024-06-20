@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "986091028950",
+    "project_id": "talk-space-37251",
+    "storage_bucket": "talk-space-37251.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986091028950:android:38af0bbc1ccabcd9972477",
+        "android_client_info": {
+          "package_name": "com.example.talk_space"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDXzKoxsD2SFU3fE40J49Rky-DFoKWNhY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
