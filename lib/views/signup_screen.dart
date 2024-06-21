@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talk_space/controller/signup/signup_bloc.dart';
 import 'package:talk_space/resources/constants/image_urls.dart';
 import 'package:talk_space/resources/widgets/button_widget.dart';
 import 'package:talk_space/resources/widgets/textfield.dart';
 import 'package:talk_space/utils/validation.dart';
+import 'package:talk_space/views/login_screen.dart';
 
 // ignore: must_be_immutable
 class SignupScreen extends StatelessWidget {
@@ -74,14 +77,33 @@ class SignupScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: size.height * 0.03),
-                  ButtonWidget(
-                    title: 'Create Account',
-                    onPress: () {
-                      if (signupKey.currentState!.validate()) {}
+                  BlocBuilder<SignupBloc, SignupState>(
+                    builder: (context, state) {
+                      if (state is SignupLoadingState) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return ButtonWidget(
+                        title: 'Create Account',
+                        onPress: () {
+                          if (signupKey.currentState!.validate()) {
+                            context.read<SignupBloc>().add(SignupUserEvent(
+                                context: context,
+                                name: nameController.text,
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim()));
+                          }
+                        },
+                      );
                     },
                   ),
                   SizedBox(height: size.height * 0.01),
-                  const Center(child: Text('Login'))
+                  Center(
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoginScreen())),
+                      child: const Text('Login'),
+                    ),
+                  )
                 ],
               ),
             ),

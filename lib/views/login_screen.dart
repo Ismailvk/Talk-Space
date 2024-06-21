@@ -68,7 +68,9 @@ class LoginScreen extends StatelessWidget {
                   ButtonWidget(
                     title: 'Login',
                     onPress: () {
-                      if (loginKey.currentState!.validate()) {}
+                      if (loginKey.currentState!.validate()) {
+                        //
+                      }
                     },
                   ),
                   SizedBox(height: size.height * 0.01),
