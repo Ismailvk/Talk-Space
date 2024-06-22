@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talk_space/controller/login/login_bloc.dart';
 import 'package:talk_space/resources/constants/image_urls.dart';
 import 'package:talk_space/resources/widgets/button_widget.dart';
 import 'package:talk_space/resources/widgets/textfield.dart';
@@ -65,12 +67,22 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: size.height * 0.03),
-                  ButtonWidget(
-                    title: 'Login',
-                    onPress: () {
-                      if (loginKey.currentState!.validate()) {
-                        // write here
+                  BlocBuilder<LoginBloc, LoginState>(
+                    builder: (context, state) {
+                      if (state is LoginLoadingState) {
+                        return const Center(child: CircularProgressIndicator());
                       }
+                      return ButtonWidget(
+                        title: 'Login',
+                        onPress: () {
+                          if (loginKey.currentState!.validate()) {
+                            context.read<LoginBloc>().add(LoginUser(
+                                context: context,
+                                email: emailController.text.trim(),
+                                password: passwordController.text));
+                          }
+                        },
+                      );
                     },
                   ),
                   SizedBox(height: size.height * 0.01),

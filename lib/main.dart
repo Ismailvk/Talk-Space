@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talk_space/controller/chat/chat_bloc.dart';
+import 'package:talk_space/controller/login/login_bloc.dart';
 import 'package:talk_space/controller/signup/signup_bloc.dart';
 import 'package:talk_space/views/splash_screen.dart';
 
@@ -25,6 +27,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SignupBloc>(create: (context) => SignupBloc()),
+        BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
+        BlocProvider<ChatBloc>(create: (context) => ChatBloc()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
