@@ -32,19 +32,39 @@ class HomeScreen extends StatelessWidget {
                 if (state is FindUserLoadingState) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is FindUserSuccessState) {
+                  if (state.userMap.isEmpty) {
+                    return const Center(child: Text('No user found'));
+                  }
                   return ListTile(
                     leading: const Icon(Icons.person_3_outlined),
                     title: Text(state.userMap['name']),
                     subtitle: Text(state.userMap['email']),
-                    trailing: const Icon(Icons.chat_rounded),
+                    trailing: GestureDetector(
+                        onTap: () {
+                          context.read<ChatBloc>().add(ChatButtonClickedEvent(
+                              user1: state.userMap['name'],
+                              user2: state.userMap['name'],
+                              context: context,
+                              userMap: state.userMap));
+                        },
+                        child: const Icon(Icons.chat_rounded)),
                   );
                 }
-                return Text('No user found');
+                return const Text('No user found');
               },
             )
           ],
         ),
       ),
     );
+  }
+
+  String chatRoomId(String user1, String user2) {
+    if (user1[0].toLowerCase().codeUnits[0] >
+        user2.toLowerCase().codeUnits[0]) {
+      return '$user1$user2';
+    } else {
+      return '$user2$user1';
+    }
   }
 }
