@@ -24,6 +24,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           .user;
       if (user != null) {
         print('Account Created Successfull $user');
+        user.updateProfile(displayName: event.name);
         await firestore.collection('user').doc(auth.currentUser?.uid).set({
           "name": event.name,
           "email": event.email,

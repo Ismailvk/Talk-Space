@@ -4,8 +4,10 @@ import 'package:talk_space/controller/chat/chat_bloc.dart';
 import 'package:talk_space/controller/login/login_bloc.dart';
 import 'package:talk_space/resources/widgets/search_textfield.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  final String user1;
+  HomeScreen({super.key, required this.user1});
 
   TextEditingController searchController = TextEditingController();
 
@@ -42,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                     trailing: GestureDetector(
                         onTap: () {
                           context.read<ChatBloc>().add(ChatButtonClickedEvent(
-                              user1: state.userMap['name'],
+                              user1: user1,
                               user2: state.userMap['name'],
                               context: context,
                               userMap: state.userMap));
@@ -57,14 +59,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String chatRoomId(String user1, String user2) {
-    if (user1[0].toLowerCase().codeUnits[0] >
-        user2.toLowerCase().codeUnits[0]) {
-      return '$user1$user2';
-    } else {
-      return '$user2$user1';
-    }
   }
 }

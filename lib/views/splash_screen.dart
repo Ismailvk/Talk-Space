@@ -31,9 +31,12 @@ class _SplashScreenState extends State<SplashScreen> {
   loginCheck(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 2));
     if (auth.currentUser != null) {
+      print(auth.currentUser?.email);
       print('Auth success ------');
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen(user1: auth.currentUser!.displayName!)),
           (route) => false);
     } else {
       print('Auth not found--------');

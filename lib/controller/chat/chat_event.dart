@@ -19,3 +19,12 @@ final class ChatButtonClickedEvent extends ChatEvent {
       required this.context,
       required this.userMap});
 }
+
+final class SendMessageEvent extends ChatEvent {
+  final String authName;
+  final String message;
+  final String roomId;
+
+  SendMessageEvent(
+      {required this.roomId, required this.authName, required this.message});
+}

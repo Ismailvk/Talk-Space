@@ -11,3 +11,9 @@ final class FindUserSuccessState extends ChatState {
 
   FindUserSuccessState({required this.userMap});
 }
+
+final class SendMessageSuccessState extends ChatState {
+  final Map<String, dynamic> message;
+
+  SendMessageSuccessState({required this.message});
+}
