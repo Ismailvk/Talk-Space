@@ -26,6 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (user != null) {
         print('Login Successfull the user :$user');
+        print('success');
         Navigator.of(event.context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => HomeScreen(user1: user.displayName!)),
