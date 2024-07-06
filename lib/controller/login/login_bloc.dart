@@ -25,7 +25,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           .user;
 
       if (user != null) {
-        //
         print('Login Successfull $user');
         Navigator.of(event.context).pushAndRemoveUntil(
             MaterialPageRoute(
