@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:talk_space/views/home_screen.dart';
@@ -41,8 +42,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   FutureOr<void> logoutUser(LogoutUser event, Emitter<LoginState> emit) async {
     FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
     try {
       await auth.signOut();
+      await firestore
+          .collection('user')
+          .doc(auth.currentUser?.uid)
+          .update({"status": "Offline"});
       Navigator.of(event.context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginScreen()),
           (route) => false);

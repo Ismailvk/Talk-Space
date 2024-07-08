@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talk_space/controller/chat/chat_bloc.dart';
@@ -12,13 +12,27 @@ class PersonalChatRoom extends StatelessWidget {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController messageController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(userMap['name']),
+        title: StreamBuilder<DocumentSnapshot>(
+          stream: firestore.collection('user').doc(userMap['uid']).snapshots(),
+          builder: (context, snapshot) {
+            return Column(
+              children: [
+                Text(userMap['name']),
+                Text(
+                  snapshot.data?['status'],
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            );
+          },
+        ),
       ),
       body: Column(
         children: [
@@ -73,6 +87,7 @@ class PersonalChatRoom extends StatelessWidget {
                     child: TextField(
                       controller: messageController,
                       decoration: InputDecoration(
+                        suffixIcon: const Icon(Icons.image_outlined),
                         hintText: 'Type here ...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -111,9 +126,9 @@ class PersonalChatRoom extends StatelessWidget {
   Widget message(Size size, Map<String, dynamic> map) {
     return Container(
       width: size.width,
-      alignment: map['sendby'] == map['name']
-          ? Alignment.centerRight
-          : Alignment.centerLeft,
+      alignment: map['sendby'] == auth.currentUser?.displayName
+          ? Alignment.centerLeft
+          : Alignment.centerRight,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),

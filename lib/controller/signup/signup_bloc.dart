@@ -28,7 +28,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         await firestore.collection('user').doc(auth.currentUser?.uid).set({
           "name": event.name,
           "email": event.email,
-          "status": "Unavailable"
+          "status": "Unavailable",
+          "uid": auth.currentUser?.uid,
         });
         print('success');
         Navigator.of(event.context)
