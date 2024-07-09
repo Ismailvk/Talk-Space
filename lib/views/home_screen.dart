@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       //online
       setStatus('Online');
     } else {
-      //
+      //offline
       setStatus('Offline');
     }
   }
