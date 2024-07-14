@@ -1,9 +1,14 @@
 // ignore_for_file: must_be_immutable
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:talk_space/controller/chat/chat_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 class PersonalChatRoom extends StatelessWidget {
   final Map<String, dynamic> userMap;
@@ -13,6 +18,8 @@ class PersonalChatRoom extends StatelessWidget {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController messageController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  File? fileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +94,9 @@ class PersonalChatRoom extends StatelessWidget {
                     child: TextField(
                       controller: messageController,
                       decoration: InputDecoration(
-                        suffixIcon: const Icon(Icons.image_outlined),
+                        suffixIcon: IconButton(
+                            onPressed: () => pickImage(),
+                            icon: const Icon(Icons.image_outlined)),
                         hintText: 'Type here ...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -140,5 +149,28 @@ class PersonalChatRoom extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  pickImage() async {
+    ImagePicker picker = ImagePicker();
+    await picker.pickImage(source: ImageSource.gallery).then((xFile) {
+      if (xFile != null) {
+        fileImage = File(xFile.path);
+        print(fileImage);
+        uploadImage();
+      }
+    });
+  }
+
+  Future uploadImage() async {
+    String fileName = const Uuid().v1();
+    var ref =
+        FirebaseStorage.instance.ref().child('images').child('$fileName.jpg');
+
+    var uploadTask = await ref.putFile(fileImage!);
+    print('called $uploadTask');
+    String imageUrl = await uploadTask.ref.getDownloadURL();
+    print('------------------------------');
+    print(imageUrl);
   }
 }
