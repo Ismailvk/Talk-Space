@@ -6,7 +6,6 @@ import 'package:talk_space/controller/chat/chat_bloc.dart';
 import 'package:talk_space/controller/login/login_bloc.dart';
 import 'package:talk_space/resources/widgets/search_textfield.dart';
 
-// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
   final String user1;
   const HomeScreen({super.key, required this.user1});
