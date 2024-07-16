@@ -31,7 +31,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                 builder: (context) => HomeScreen(user1: user.displayName!)),
             (route) => false);
       } else {
-        print('Login Failed');
         emit(LoginErrorSate(message: "Login Failed"));
       }
     } catch (e) {
