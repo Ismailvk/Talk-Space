@@ -51,7 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           MaterialPageRoute(builder: (context) => LoginScreen()),
           (route) => false);
     } catch (e) {
-      print('Error Occured');
+      //
     }
   }
 }
