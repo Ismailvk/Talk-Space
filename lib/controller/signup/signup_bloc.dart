@@ -18,7 +18,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     FirebaseAuth auth = FirebaseAuth.instance;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     try {
-      print('here');
       User? user = (await auth.createUserWithEmailAndPassword(
               email: event.email, password: event.password))
           .user;
