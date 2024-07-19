@@ -30,11 +30,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           "status": "Unavailable",
           "uid": auth.currentUser?.uid,
         });
-        print('success');
         Navigator.of(event.context)
             .push(MaterialPageRoute(builder: (context) => LoginScreen()));
       } else {
-        print('Account Creation Failed');
         emit(SignupFailedState(message: 'Account Creation Failed'));
       }
     } catch (e) {
