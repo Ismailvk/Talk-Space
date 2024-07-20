@@ -36,7 +36,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         emit(SignupFailedState(message: 'Account Creation Failed'));
       }
     } catch (e) {
-      print(e);
       emit(SignupFailedState(message: e.toString()));
     }
   }
